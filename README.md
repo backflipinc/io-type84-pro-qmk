@@ -21,6 +21,7 @@ and Bluetooth / 2.4 GHz, battery reporting and auto-sleep all keep working.
 | 🎛️ **Knob** | The removable knob works in both spots (Esc or PrtSc): volume, mute, next/prev track on Fn |
 | 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, link status, lock indicators — plus a full settings menu |
 | 🌈 **RGB** | Per-key RGB with 30+ effects, including 7 custom **two-colour** effects; black is a colour too |
+| 🎯 **SnapTap** | The SnapTap switch on the case works: opposing keys A/D and W/S never cancel out — last input wins, or neutral |
 | 🔦 **Fn overlay** | Hold Fn and only the keys bound on the Fn layer light up, in a colour of your choice |
 | 📏 **Light bar** | The 9-LED strip under the screen: WPM meter, battery gauge, link status, scanner, Caps alert |
 | 📡 **Wireless** | Bluetooth (5 host slots) and 2.4 GHz dongle via the built-in radio module, pairing from the keyboard |
@@ -82,6 +83,7 @@ keyboard disconnects from USB, just like the stock firmware (the cable only char
 |---|---|
 | **LIGHTING** | on/off, effect, colour, colour 2 (two-colour effects), Fn overlay colour, brightness, hue, saturation, speed |
 | **LIGHT BAR** | mode (WPM, WPM bar, battery, link, scanner, off), colour, Caps Lock alert |
+| **SNAPTAP** | switch state, mode (last input / neutral), key pairs |
 | **WIRELESS** | current mode, Bluetooth slot, pair now |
 | **POWER** | auto-sleep timer, battery %, voltage, charging status |
 | **DISPLAY** | UI accent colour (amber, green, cyan, red, white), screen-off timeout |
@@ -96,6 +98,13 @@ Besides the stock QMK effects there are custom two-colour effects that use **COL
 **COLOR 2** from the menu: **TWO TONE** (letters / modifiers), **GRADIENT 2**, **CROSSFADE 2**,
 **SCANNER 2**, **STARLIGHT 2**, **REACTIVE 2** and **RIPPLE 2** (both react to key presses).
 Rows that the current effect doesn't use are dimmed in the menu.
+
+### SnapTap
+
+Flip the **SnapTap** switch on the case to turn it on: the screen shows *SNAPTAP ON*, the
+A/D and W/S keys blink and a **SNAPTAP** tile lights up on the main screen. While both keys
+of a pair are held, only one reaches the host — the last one pressed (**LAST**), or neither
+(**NEUTRAL**, set in the menu). Turn it off for typing: fast rollovers like "ad" would retype a letter.
 
 ### Battery in your OS
 
