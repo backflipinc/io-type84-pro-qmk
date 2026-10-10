@@ -3,9 +3,9 @@
 Open-source [QMK](https://qmk.fm) firmware for the **IO by Red Square Type 84 Pro Wireless**
 (USB `0c45:8009`, Sonix **SN32F290** MCU), built on the [SonixQMK](https://github.com/SonixQMK/qmk_firmware) fork.
 
-Everything the stock firmware does — and a bit more: the LCD becomes a real
-HUD with an on-device settings menu, the light bar under the screen gets its own modes,
-and Bluetooth / 2.4 GHz, battery reporting and auto-sleep all keep working.
+The LCD becomes a real HUD with an on-device settings menu, the light bar under the screen
+gets its own modes, keys are remapped live in Vial, and Bluetooth / 2.4 GHz, SnapTap, battery
+reporting and auto-sleep all keep working. See [how it compares with the stock firmware](#compared-with-the-stock-firmware).
 
 ![On-screen UI](docs/images/ui-mockup.png)
 
@@ -29,6 +29,35 @@ and Bluetooth / 2.4 GHz, battery reporting and auto-sleep all keep working.
 | 🔋 **Battery** | Charge level on screen and in the OS — over Bluetooth, the 2.4 GHz dongle **and** USB (Linux) |
 | 💤 **Power** | Configurable auto-sleep in wireless modes (deep sleep, any key/knob/switch wakes it) |
 | 🛟 **Safety nets** | Hold Esc while plugging in → bootloader; a watchdog drops a hung firmware into the bootloader |
+
+## Compared with the stock firmware
+
+Compared with the official firmware v1.32 and its web configurator (`web.io.vision`).
+
+**What you get on top of stock**
+
+| | Stock | This firmware |
+|---|---|---|
+| Settings | web configurator (WebHID, Chromium browsers only) | on-device menu on the LCD — no PC or browser needed; Vial (desktop app or browser) for keymaps |
+| Screen | images / animations, page switching | live HUD: layer, WPM, battery %, voltage, link, lock and SnapTap state; settings menu; screen-off timeout |
+| Bluetooth hosts | 3 | 5 |
+| Battery in the OS | Bluetooth / 2.4 GHz | also over USB (Linux: `upower`, desktop widgets) |
+| Keymap power | remap, macros, mod-tap, toggle, key combos | everything QMK has: up to 4 layers live in Vial, tap dance, combos, key overrides, caps word, layer lock, repeat key, auto shift, per-key tapping settings; any QMK feature in code |
+| Lighting | stock effects, per-key colours | 30+ QMK effects, 7 **two-colour** effects, black as a colour, Fn overlay showing only the keys bound on Fn |
+| Light bar | effect switch | WPM meter, WPM bar, battery gauge, link status, scanner, Caps alert |
+| Auto-sleep | not adjustable in the configurator | 1 / 5 / 10 / 30 min or off, from the keyboard |
+| Recovery | bootloader only through the web configurator | hold Esc while plugging in → bootloader; watchdog drops a hung firmware into the bootloader |
+| Source | closed | open (GPL-2.0), hardware and radio protocol documented in `docs/` |
+
+**What stock has and this firmware doesn't (yet)**
+
+- Uploading your own images, GIFs and video to the screen (the stock SPI flash is left untouched).
+- A clock on the screen synced from the PC.
+- Per-key custom colours ("Lighting Edit") and a lighting direction setting.
+- Key response time (debounce) adjustable at runtime.
+- Win / Mac mode switch (Fn+M) and Cmd lock.
+- Configurable SnapTap pairs and the two "key priority" modes — fixed to A/D and W/S, last input or neutral, for now.
+- Firmware updates from the web configurator — flashing is done with `flash.sh`.
 
 ## Quick start
 
