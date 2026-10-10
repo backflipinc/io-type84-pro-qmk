@@ -1,17 +1,19 @@
 # IO Type 84 Pro Wireless — QMK firmware
 
 Open-source [QMK](https://qmk.fm) firmware for the **IO by Red Square Type 84 Pro Wireless**
-(USB `0c45:8009`, Sonix **SN32F290** MCU), built on the [SonixQMK](https://github.com/SonixQMK/qmk_firmware) fork.
+(USB `0c45:8009`, Sonix **SN32F290** MCU), built on [**qmk-armed**](https://github.com/backflipinc/qmk-armed) —
+our QMK fork (SonixQMK + Vial + the qmk-armed protocol) where the keyboard's sources live.
+This repository pins a tested qmk-armed commit and adds the build, flash and release tooling around it.
 
 The LCD becomes a real HUD with an on-device settings menu, the light bar under the screen
 gets its own modes, keys are remapped live in Vial, and Bluetooth / 2.4 GHz, SnapTap, battery
 reporting and auto-sleep all keep working. See [how it compares with the stock firmware](#compared-with-the-stock-firmware).
 
-![On-screen UI](docs/images/ui-mockup.png)
+![On-screen UI](https://github.com/backflipinc/qmk-armed/raw/armed/keyboards/io/type84_pro/docs/images/ui-mockup.png)
 
 > [!WARNING]
 > This is an unofficial, reverse-engineered firmware. Flashing is reversible (see
-> [Going back to stock](docs/flashing.md#going-back-to-stock)), but you do it at your own risk.
+> [Going back to stock](https://github.com/backflipinc/qmk-armed/blob/armed/keyboards/io/type84_pro/docs/flashing.md#going-back-to-stock)), but you do it at your own risk.
 
 ## Features
 
@@ -47,7 +49,7 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 | Light bar | effect switch | WPM meter, WPM bar, battery gauge, link status, scanner, Caps alert |
 | Auto-sleep | not adjustable in the configurator | 1 / 5 / 10 / 30 min or off, from the keyboard |
 | Recovery | bootloader only through the web configurator | hold Esc while plugging in → bootloader; watchdog drops a hung firmware into the bootloader |
-| Source | closed | open (GPL-2.0), hardware and radio protocol documented in `docs/` |
+| Source | closed | open (GPL-2.0), hardware and radio protocol documented in qmk-armed |
 
 **What stock has and this firmware doesn't (yet)**
 
@@ -68,16 +70,16 @@ To build it yourself you need: Linux (macOS should work too), `git`, `make`, Pyt
 [SonixFlasherC](https://github.com/SonixQMK/SonixFlasherC) (`sonixflasher`).
 
 ```sh
-# 1. get the sources and a patched SonixQMK tree
+# 1. get the sources: qmk-armed at the pinned commit
 git clone https://github.com/backflipinc/io-type84-pro-qmk.git
 cd io-type84-pro-qmk
 ./setup.sh
 
 # 2. build
-make -C qmk_firmware io/type84_pro:default    # with Vial; io/type84_pro:novial — without
+make -C qmk-armed io/type84_pro:default       # with Vial; io/type84_pro:novial — without
 
 # 3. allow flashing without sudo (once)
-sudo cp udev/70-io-type84-pro.rules /etc/udev/rules.d/ && sudo udevadm control --reload
+sudo cp qmk-armed/keyboards/io/type84_pro/udev/70-io-type84-pro.rules /etc/udev/rules.d/ && sudo udevadm control --reload
 
 # 4. flash — set the mode switch to USB first
 ./flash.sh                                     # or ./flash.sh path/to/io_type84_pro_default.bin
@@ -85,7 +87,7 @@ sudo cp udev/70-io-type84-pro.rules /etc/udev/rules.d/ && sudo udevadm control -
 
 `flash.sh` puts a **stock** keyboard into its bootloader by itself. On QMK, enter the
 bootloader from the menu (**Fn+Enter → SYSTEM → BOOTLOADER**) or **hold Esc while plugging
-the cable in**. Details, recovery and going back to stock: [docs/flashing.md](docs/flashing.md).
+the cable in**. Details, recovery and going back to stock: [flashing.md](https://github.com/backflipinc/qmk-armed/blob/armed/keyboards/io/type84_pro/docs/flashing.md).
 
 ## Using it
 
@@ -149,8 +151,8 @@ Vial only talks to the keyboard over USB.
 [**Vial Armed**](https://github.com/backflipinc/vial-gui-armed) is a Vial fork made for this firmware, in the
 same design as the screen UI. On top of everything Vial does, it sets what stock Vial can't: all effects
 including the two-colour ones (with a live preview on the layout), COLOR 2, the Fn overlay colour, the light
-bar and the auto-sleep timer. It talks to the keyboard over a small Raw HID channel of its own
-([details](docs/development.md#raw-hid-channel-for-vial-armed)); regular Vial keeps working as before.
+bar and the auto-sleep timer. It talks to the keyboard over the [qmk-armed protocol](https://github.com/backflipinc/qmk-armed/blob/armed/docs/armed.md);
+regular Vial keeps working as before.
 
 ### Battery in your OS
 
@@ -158,14 +160,25 @@ bar and the auto-sleep timer. It talks to the keyboard over a small Raw HID chan
 - **USB (Linux):** the firmware exposes a standard HID battery, so `upower` and desktop
   battery widgets list the keyboard with its charge and charging state.
 
+## Updating qmk-armed
+
+`qmk-armed` is a git submodule on the fork's `armed` branch. To move to a newer commit:
+
+```sh
+git -C qmk-armed fetch --depth 1 origin armed && git -C qmk-armed checkout FETCH_HEAD
+git add qmk-armed && git commit -m "Update qmk-armed"
+```
+
+Keyboard changes go to [qmk-armed](https://github.com/backflipinc/qmk-armed) first.
+
 ## Documentation
 
 | | |
 |---|---|
-| [docs/flashing.md](docs/flashing.md) | Flashing, recovery, going back to stock |
-| [docs/hardware.md](docs/hardware.md) | Reverse-engineered hardware map: pins, matrix, LEDs, display, radio, battery |
-| [docs/radio-protocol.md](docs/radio-protocol.md) | UART protocol between the MCU and the BT / 2.4 GHz module |
-| [docs/development.md](docs/development.md) | How the port is built, gotchas, customising, debugging |
+| [flashing.md](https://github.com/backflipinc/qmk-armed/blob/armed/keyboards/io/type84_pro/docs/flashing.md) | Flashing, recovery, going back to stock |
+| [hardware.md](https://github.com/backflipinc/qmk-armed/blob/armed/keyboards/io/type84_pro/docs/hardware.md) | Reverse-engineered hardware map: pins, matrix, LEDs, display, radio, battery |
+| [radio-protocol.md](https://github.com/backflipinc/qmk-armed/blob/armed/keyboards/io/type84_pro/docs/radio-protocol.md) | UART protocol between the MCU and the BT / 2.4 GHz module |
+| [development.md](https://github.com/backflipinc/qmk-armed/blob/armed/keyboards/io/type84_pro/docs/development.md) | How the port is built, gotchas, customising, debugging |
 
 ## Status and limitations
 
@@ -174,18 +187,18 @@ bar and the auto-sleep timer. It talks to the keyboard over a small Raw HID chan
 - The SPI flash with the stock screen animations is not used.
 - Vial works over USB only; in BT / 2.4 GHz the keyboard is off the USB bus.
 - System power keys and mouse keys are not sent over the air (format unverified).
-- The core patch narrows QMK's *System Control* report to power / sleep / wake, so
+- The USB battery report narrows QMK's *System Control* report to power / sleep / wake, so
   `KC_SYSTEM_RESTART` and similar rarely used keys do nothing.
 
 ## Credits
 
 - [QMK](https://github.com/qmk/qmk_firmware) and [SonixQMK](https://github.com/SonixQMK/qmk_firmware) — the firmware and the SN32 port
-- [Vial](https://get.vial.today) / [vial-qmk](https://github.com/vial-kb/vial-qmk) — live remapping (`patches/vial.patch`);
+- [Vial](https://get.vial.today) / [vial-qmk](https://github.com/vial-kb/vial-qmk) — live remapping;
   [Vial Armed](https://github.com/backflipinc/vial-gui-armed) — the companion app
 - [SonixFlasherC](https://github.com/SonixQMK/SonixFlasherC) — the flasher
 - [ChibiOS](https://www.chibios.org) / ChibiOS-Contrib — the RTOS and HAL
 - Fonts: [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono) and
-  [Rajdhani](https://fonts.google.com/specimen/Rajdhani) (SIL Open Font License, see `fonts/`)
+  [Rajdhani](https://fonts.google.com/specimen/Rajdhani) (SIL Open Font License, see `keyboards/io/type84_pro/graphics/fonts/` in qmk-armed)
 
 Not affiliated with IO by Red Square.
 

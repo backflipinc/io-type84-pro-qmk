@@ -1,5 +1,3 @@
-# local SonixQMK checkout created by setup.sh
-/qmk_firmware/
 # build outputs
 *.bin
 *.hex

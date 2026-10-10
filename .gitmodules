@@ -1,0 +1,5 @@
+[submodule "qmk-armed"]
+	url = https://github.com/backflipinc/qmk-armed.git
+	shallow = true
+	branch = armed
+	path = qmk-armed
