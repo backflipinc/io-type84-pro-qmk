@@ -18,6 +18,7 @@ and Bluetooth / 2.4 GHz, battery reporting and auto-sleep all keep working.
 | | |
 |---|---|
 | ⌨️ **Keys** | Full 84-key layout, NKRO over USB **and** Bluetooth / 2.4 GHz (on by default), QMK keymaps |
+| 🧩 **Vial** | Optional `vial` build: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing |
 | 🎛️ **Knob** | The removable knob works in both spots (Esc or PrtSc): volume, mute, next/prev track on Fn |
 | 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, link status, lock indicators — plus a full settings menu |
 | 🌈 **RGB** | Per-key RGB with 30+ effects, including 7 custom **two-colour** effects; black is a colour too |
@@ -42,7 +43,7 @@ cd io-type84-pro-qmk
 ./setup.sh
 
 # 2. build
-make -C qmk_firmware io/type84_pro:default
+make -C qmk_firmware io/type84_pro:default    # or :vial — remap in Vial without reflashing
 
 # 3. allow flashing without sudo (once)
 sudo cp udev/70-io-type84-pro.rules /etc/udev/rules.d/ && sudo udevadm control --reload
@@ -106,6 +107,14 @@ A/D and W/S keys blink and a **SNAPTAP** tile lights up on the main screen. Whil
 of a pair are held, only one reaches the host — the last one pressed (**LAST**), or neither
 (**NEUTRAL**, set in the menu). Turn it off for typing: fast rollovers like "ad" would retype a letter.
 
+### Vial
+
+Build `io/type84_pro:vial`, flash it with `./flash.sh qmk_firmware/io_type84_pro_vial.bin`, set the mode switch to **USB** and open
+[Vial](https://get.vial.today) — the keyboard is detected by itself. Keys and knobs can be
+remapped on 4 layers; the keyboard's own keys (Bluetooth slots, pairing, menu, sleep timer)
+are under **User**. Changes that need unlocking ask you to hold **Caps + Enter**.
+Vial only talks to the keyboard over USB.
+
 ### Battery in your OS
 
 - **Bluetooth / 2.4 GHz:** shown by the OS like any wireless keyboard.
@@ -124,8 +133,9 @@ of a pair are held, only one reaches the host — the last one pressed (**LAST**
 ## Status and limitations
 
 - Tested on one keyboard (stock firmware v1.32), on Linux.
-- Raw HID / host data on the screen (clock, CPU load, …) is not implemented yet.
+- Raw HID host data on the screen (clock, CPU load, …) is not implemented yet.
 - The SPI flash with the stock screen animations is not used.
+- Vial works over USB only; in BT / 2.4 GHz the keyboard is off the USB bus.
 - System power keys and mouse keys are not sent over the air (format unverified).
 - The core patch narrows QMK's *System Control* report to power / sleep / wake, so
   `KC_SYSTEM_RESTART` and similar rarely used keys do nothing.
@@ -133,6 +143,7 @@ of a pair are held, only one reaches the host — the last one pressed (**LAST**
 ## Credits
 
 - [QMK](https://github.com/qmk/qmk_firmware) and [SonixQMK](https://github.com/SonixQMK/qmk_firmware) — the firmware and the SN32 port
+- [Vial](https://get.vial.today) / [vial-qmk](https://github.com/vial-kb/vial-qmk) — live remapping (`patches/vial.patch`)
 - [SonixFlasherC](https://github.com/SonixQMK/SonixFlasherC) — the flasher
 - [ChibiOS](https://www.chibios.org) / ChibiOS-Contrib — the RTOS and HAL
 - Fonts: [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono) and

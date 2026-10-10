@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Prepare a SonixQMK tree for building the IO Type 84 Pro firmware:
 #   1. clone SonixQMK (sn32_develop) at the tested commit (if not there yet),
-#   2. apply our small core patch (USB HID battery report),
+#   2. apply our core patches (USB HID battery report, Vial from vial-qmk),
 #   3. link this repo's keyboard folder into keyboards/io/type84_pro.
 #
 # Usage: ./setup.sh [path-to-qmk_firmware]     (default: ./qmk_firmware)
@@ -29,13 +29,14 @@ fi
 say "Updating submodules (ChibiOS, ChibiOS-Contrib, ...)"
 git -C "$QMK_DIR" submodule update --init --recursive --depth 1
 
-PATCH="$HERE/patches/hid-battery.patch"
-if git -C "$QMK_DIR" apply --reverse --check "$PATCH" 2>/dev/null; then
-    say "Core patch already applied"
-else
-    say "Applying core patch: $(basename "$PATCH")"
-    git -C "$QMK_DIR" apply "$PATCH"
-fi
+for PATCH in "$HERE/patches/hid-battery.patch" "$HERE/patches/vial.patch"; do
+    if git -C "$QMK_DIR" apply --reverse --check "$PATCH" 2>/dev/null; then
+        say "Core patch already applied: $(basename "$PATCH")"
+    else
+        say "Applying core patch: $(basename "$PATCH")"
+        git -C "$QMK_DIR" apply "$PATCH"
+    fi
+done
 
 mkdir -p "$QMK_DIR/keyboards/io"
 LINK="$QMK_DIR/keyboards/io/type84_pro"
@@ -51,7 +52,7 @@ cat <<EOF
 Done. Build with:
 
   cd "$QMK_DIR"
-  make io/type84_pro:default
+  make io/type84_pro:default     # or io/type84_pro:vial for Vial support
 
 (needs make, python3 with the 'qmk' package, and arm-none-eabi-gcc in PATH)
 EOF
