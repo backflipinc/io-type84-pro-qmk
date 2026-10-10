@@ -18,7 +18,7 @@ reporting and auto-sleep all keep working. See [how it compares with the stock f
 | | |
 |---|---|
 | ⌨️ **Keys** | Full 84-key layout, NKRO over USB **and** Bluetooth / 2.4 GHz (on by default), QMK keymaps |
-| 🧩 **Vial** | Built in: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing |
+| 🧩 **Vial** | Built in: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing. [Vial Armed](https://github.com/backflipinc/vial-gui-armed) also sets the two-colour effects, light bar, Fn colour and auto-sleep |
 | 🎛️ **Knob** | The removable knob works in both spots (Esc or PrtSc): volume, mute, next/prev track on Fn |
 | 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, link status, lock indicators — plus a full settings menu |
 | 🌈 **RGB** | Per-key RGB with 30+ effects, including 7 custom **two-colour** effects; black is a colour too |
@@ -38,7 +38,7 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 
 | | Stock | This firmware |
 |---|---|---|
-| Settings | web configurator (WebHID, Chromium browsers only) | on-device menu on the LCD — no PC or browser needed; Vial (desktop app or browser) for keymaps |
+| Settings | web configurator (WebHID, Chromium browsers only) | on-device menu on the LCD — no PC or browser needed; Vial for keymaps; [Vial Armed](https://github.com/backflipinc/vial-gui-armed) desktop app for keymaps and lighting with a live preview |
 | Screen | images / animations, page switching | live HUD: layer, WPM, battery %, voltage, link, lock and SnapTap state; settings menu; screen-off timeout |
 | Bluetooth hosts | 3 | 5 |
 | Battery in the OS | Bluetooth / 2.4 GHz | also over USB (Linux: `upower`, desktop widgets) |
@@ -61,7 +61,9 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 
 ## Quick start
 
-You need: Linux (macOS should work too), `git`, `make`, Python 3 with [`qmk`](https://pypi.org/project/qmk/)
+Ready-made firmware is attached to every [release](https://github.com/backflipinc/io-type84-pro-qmk/releases)
+(`io_type84_pro_default.bin` with Vial, `io_type84_pro_novial.bin` without) — skip to step 3.
+To build it yourself you need: Linux (macOS should work too), `git`, `make`, Python 3 with [`qmk`](https://pypi.org/project/qmk/)
 (`pip install qmk`), an `arm-none-eabi-gcc` toolchain, and
 [SonixFlasherC](https://github.com/SonixQMK/SonixFlasherC) (`sonixflasher`).
 
@@ -78,7 +80,7 @@ make -C qmk_firmware io/type84_pro:default    # with Vial; io/type84_pro:novial 
 sudo cp udev/70-io-type84-pro.rules /etc/udev/rules.d/ && sudo udevadm control --reload
 
 # 4. flash — set the mode switch to USB first
-./flash.sh
+./flash.sh                                     # or ./flash.sh path/to/io_type84_pro_default.bin
 ```
 
 `flash.sh` puts a **stock** keyboard into its bootloader by itself. On QMK, enter the
@@ -144,6 +146,12 @@ remapped on 4 layers; the keyboard's own keys (Bluetooth slots, pairing, menu, s
 are under **User**. Changes that need unlocking ask you to hold **Caps + Enter**.
 Vial only talks to the keyboard over USB.
 
+[**Vial Armed**](https://github.com/backflipinc/vial-gui-armed) is a Vial fork made for this firmware, in the
+same design as the screen UI. On top of everything Vial does, it sets what stock Vial can't: all effects
+including the two-colour ones (with a live preview on the layout), COLOR 2, the Fn overlay colour, the light
+bar and the auto-sleep timer. It talks to the keyboard over a small Raw HID channel of its own
+([details](docs/development.md#raw-hid-channel-for-vial-armed)); regular Vial keeps working as before.
+
 ### Battery in your OS
 
 - **Bluetooth / 2.4 GHz:** shown by the OS like any wireless keyboard.
@@ -172,7 +180,8 @@ Vial only talks to the keyboard over USB.
 ## Credits
 
 - [QMK](https://github.com/qmk/qmk_firmware) and [SonixQMK](https://github.com/SonixQMK/qmk_firmware) — the firmware and the SN32 port
-- [Vial](https://get.vial.today) / [vial-qmk](https://github.com/vial-kb/vial-qmk) — live remapping (`patches/vial.patch`)
+- [Vial](https://get.vial.today) / [vial-qmk](https://github.com/vial-kb/vial-qmk) — live remapping (`patches/vial.patch`);
+  [Vial Armed](https://github.com/backflipinc/vial-gui-armed) — the companion app
 - [SonixFlasherC](https://github.com/SonixQMK/SonixFlasherC) — the flasher
 - [ChibiOS](https://www.chibios.org) / ChibiOS-Contrib — the RTOS and HAL
 - Fonts: [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono) and
