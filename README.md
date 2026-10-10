@@ -36,7 +36,7 @@ You need: Linux (macOS should work too), `git`, `make`, Python 3 with [`qmk`](ht
 
 ```sh
 # 1. get the sources and a patched SonixQMK tree
-git clone https://github.com/<you>/io-type84-pro-qmk.git
+git clone https://github.com/backflipinc/io-type84-pro-qmk.git
 cd io-type84-pro-qmk
 ./setup.sh
 
