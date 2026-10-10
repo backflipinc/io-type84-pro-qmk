@@ -18,7 +18,7 @@ reporting and auto-sleep all keep working. See [how it compares with the stock f
 | | |
 |---|---|
 | ⌨️ **Keys** | Full 84-key layout, NKRO over USB **and** Bluetooth / 2.4 GHz (on by default), QMK keymaps |
-| 🧩 **Vial** | Optional `vial` build: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing |
+| 🧩 **Vial** | Built in: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing |
 | 🎛️ **Knob** | The removable knob works in both spots (Esc or PrtSc): volume, mute, next/prev track on Fn |
 | 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, link status, lock indicators — plus a full settings menu |
 | 🌈 **RGB** | Per-key RGB with 30+ effects, including 7 custom **two-colour** effects; black is a colour too |
@@ -72,7 +72,7 @@ cd io-type84-pro-qmk
 ./setup.sh
 
 # 2. build
-make -C qmk_firmware io/type84_pro:default    # or :vial — remap in Vial without reflashing
+make -C qmk_firmware io/type84_pro:default    # with Vial; io/type84_pro:novial — without
 
 # 3. allow flashing without sudo (once)
 sudo cp udev/70-io-type84-pro.rules /etc/udev/rules.d/ && sudo udevadm control --reload
@@ -138,7 +138,7 @@ of a pair are held, only one reaches the host — the last one pressed (**LAST**
 
 ### Vial
 
-Build `io/type84_pro:vial`, flash it with `./flash.sh qmk_firmware/io_type84_pro_vial.bin`, set the mode switch to **USB** and open
+The default build includes Vial. Set the mode switch to **USB** and open
 [Vial](https://get.vial.today) — the keyboard is detected by itself. Keys and knobs can be
 remapped on 4 layers; the keyboard's own keys (Bluetooth slots, pairing, menu, sleep timer)
 are under **User**. Changes that need unlocking ask you to hold **Caps + Enter**.

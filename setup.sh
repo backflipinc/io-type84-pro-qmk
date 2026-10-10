@@ -52,7 +52,7 @@ cat <<EOF
 Done. Build with:
 
   cd "$QMK_DIR"
-  make io/type84_pro:default     # or io/type84_pro:vial for Vial support
+  make io/type84_pro:default     # with Vial; io/type84_pro:novial without
 
 (needs make, python3 with the 'qmk' package, and arm-none-eabi-gcc in PATH)
 EOF
