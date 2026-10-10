@@ -1,0 +1,10 @@
+# local SonixQMK checkout created by setup.sh
+/qmk_firmware/
+# build outputs
+*.bin
+*.hex
+*.uf2
+.build/
+# editors
+.vscode/
+*.swp
