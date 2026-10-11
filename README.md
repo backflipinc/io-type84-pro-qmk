@@ -23,6 +23,7 @@ reporting and auto-sleep all keep working. See [how it compares with the stock f
 | 🧩 **Vial** | Built in: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing. [Vial Armed](https://github.com/backflipinc/vial-gui-armed) also sets the two-colour effects, light bar, Fn colour and auto-sleep |
 | 🎛️ **Knob** | The removable knob works in both spots (Esc or PrtSc): volume, mute, next/prev track on Fn |
 | 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, link status, lock indicators — plus a full settings menu |
+| 🎞️ **Animation** | Your own image, GIF or video on the screen instead of the HUD, stored in the same place and format as stock |
 | 🌈 **RGB** | Per-key RGB with 30+ effects, including 7 custom **two-colour** effects; black is a colour too |
 | 🎯 **SnapTap** | The SnapTap switch on the case works: opposing keys A/D and W/S never cancel out — last input wins, or neutral |
 | 🔦 **Fn overlay** | Hold Fn and only the keys bound on the Fn layer light up, in a colour of your choice |
@@ -41,7 +42,7 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 | | Stock | This firmware |
 |---|---|---|
 | Settings | web configurator (WebHID, Chromium browsers only) | on-device menu on the LCD — no PC or browser needed; Vial for keymaps; [Vial Armed](https://github.com/backflipinc/vial-gui-armed) desktop app for keymaps and lighting with a live preview |
-| Screen | images / animations, page switching | live HUD: layer, WPM, battery %, voltage, link, lock and SnapTap state; settings menu; screen-off timeout |
+| Screen | images / animations, page switching | live HUD: layer, WPM, battery %, voltage, link, lock and SnapTap state; settings menu; screen-off timeout; your own image / GIF / video (uploaded with `screen.py`, compatible with stock uploads) |
 | Bluetooth hosts | 3 | 5 |
 | Battery in the OS | Bluetooth / 2.4 GHz | also over USB (Linux: `upower`, desktop widgets) |
 | Keymap power | remap, macros, mod-tap, toggle, key combos | everything QMK has: up to 4 layers live in Vial, tap dance, combos, key overrides, caps word, layer lock, repeat key, auto shift, per-key tapping settings; any QMK feature in code |
@@ -53,7 +54,7 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 
 **What stock has and this firmware doesn't (yet)**
 
-- Uploading your own images, GIFs and video to the screen (the stock SPI flash is left untouched).
+- Uploading images from the web configurator — use `screen.py` (below); the stock built-in screen pages aren't shown.
 - A clock on the screen synced from the PC.
 - Per-key custom colours ("Lighting Edit") and a lighting direction setting.
 - Key response time (debounce) adjustable at runtime.
@@ -154,6 +155,26 @@ including the two-colour ones (with a live preview on the layout), COLOR 2, the 
 bar and the auto-sleep timer. It talks to the keyboard over the [qmk-armed protocol](https://github.com/backflipinc/qmk-armed/blob/armed/docs/armed.md);
 regular Vial keeps working as before.
 
+### Your own animation on the screen
+
+[Vial Armed](https://github.com/backflipinc/vial-gui-armed) does it on its **Screen** page (preview, fit, progress,
+backup / restore). From the command line, `screen.py` puts a picture, a GIF (or animated WebP / PNG) or a video on the screen. It needs Python with
+`pip install hid pillow numpy`, and `ffmpeg` for video. The mode switch must be on **USB**.
+
+```sh
+T=qmk-armed/keyboards/io/type84_pro/tools/screen.py
+python3 $T upload cat.gif                  # fit inside 320×172 with black bars; --fit cover fills and crops
+python3 $T upload clip.mp4 --fps 12        # video: frames are taken at --fps (default 10)
+python3 $T upload a.png b.png --delay 3000 # slideshow
+python3 $T mode hud                        # back to the HUD (or DISPLAY > MAIN SCREEN in the menu)
+python3 $T dump backup.bin                 # save what is stored (slow: ~4 s per frame); upload --raw backup.bin restores it
+```
+
+Up to 151 frames are stored (one 320×172 frame is 108 KiB). The animation lives where the stock firmware
+keeps its own, in the same format: the one that came with the keyboard (or that you uploaded with the stock
+configurator) plays here too, and yours keeps playing if you go back to stock. Uploading replaces it —
+`dump` it first if you want to keep it. The stock built-in images on the other flash chip are never written.
+
 ### Battery in your OS
 
 - **Bluetooth / 2.4 GHz:** shown by the OS like any wireless keyboard.
@@ -184,7 +205,9 @@ Keyboard changes go to [qmk-armed](https://github.com/backflipinc/qmk-armed) fir
 
 - Tested on one keyboard (stock firmware v1.32), on Linux.
 - Raw HID host data on the screen (clock, CPU load, …) is not implemented yet.
-- The SPI flash with the stock screen animations is not used.
+- Animation uploads go over Vial's 32-byte raw HID reports, ~26 KiB/s: a few seconds for a cartoon-like GIF,
+  about 4 s per frame of video (151 frames ≈ 10 min).
+- Like stock, frames reach the screen without vsync: fast high-contrast motion may show tearing.
 - Vial works over USB only; in BT / 2.4 GHz the keyboard is off the USB bus.
 - System power keys and mouse keys are not sent over the air (format unverified).
 - The USB battery report narrows QMK's *System Control* report to power / sleep / wake, so
