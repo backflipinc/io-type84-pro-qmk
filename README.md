@@ -166,7 +166,7 @@ Rows that the current effect doesn't use are dimmed in the menu.
 
 Every layer covers the keys you click on the layout (or a group: letters, F-row, mods, arrows, WASD, the keys bound on Fn…), moves
 in any direction or out from a key you pick, blends over the layers below, and can show only while Caps Lock is on
-or Fn is held (a theme with such layers replaces the Fn overlay). Changes show up on the keyboard as you make them; **SAVE** keeps them. Start from a preset, and
+or Fn is held (a theme with such layers replaces the Fn overlay). Changes show up on the keyboard as you make them; **SAVE** keeps them and makes the theme the current effect. Start from a preset, and
 export / import themes as files. The themes are stored in the user flash chip, past the area the stock firmware uses.
 
 ### SnapTap
