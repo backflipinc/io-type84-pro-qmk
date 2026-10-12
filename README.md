@@ -25,6 +25,7 @@ to **USB**, open the app, and everything is in one place:
 
 - **Keymap** — keys and knobs on all layers, macros, tap dance, combos, key overrides, QMK settings, matrix tester;
 - **Lighting** — every effect including the 7 two-colour ones, with a live preview on the layout; COLOR, COLOR 2, Fn overlay colour;
+- **Themes** — your own lighting: per-key colours and layers (gradients, rainbow, waves, sparkles, reactive keys, ripples) with any direction, edited live on the keyboard;
 - **Light bar** — mode, colour, Caps Lock alert;
 - **Device** — auto-sleep timer;
 - **Screen** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore.
@@ -39,11 +40,12 @@ Everything can also be set without a PC from the [on-screen menu](#on-screen-men
 | | |
 |---|---|
 | ⌨️ **Keys** | Full 84-key layout, NKRO over USB **and** Bluetooth / 2.4 GHz (on by default), QMK keymaps |
-| 🧩 **Vial Armed** | Built-in Vial support: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing. [Vial Armed](#configure-it-with-vial-armed) also sets the two-colour effects, light bar, Fn colour, auto-sleep and the screen animation |
+| 🧩 **Vial Armed** | Built-in Vial support: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing. [Vial Armed](#configure-it-with-vial-armed) also sets the two-colour effects, lighting themes, light bar, Fn colour, auto-sleep and the screen animation |
 | 🎛️ **Knob** | The removable knob works in both spots (Esc or PrtSc): volume, mute, next/prev track on Fn |
 | 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, link status, lock indicators — plus a full settings menu |
 | 🎞️ **Animation** | Your own image, GIF or video on the screen instead of the HUD, stored in the same place and format as stock |
 | 🌈 **RGB** | Per-key RGB with 30+ effects, including 7 custom **two-colour** effects; black is a colour too |
+| 🎨 **Themes** | 4 slots for your own lighting, built from layers and per-key colours in [Vial Armed](#lighting-themes) |
 | 🎯 **SnapTap** | The SnapTap switch on the case works: opposing keys A/D and W/S never cancel out — last input wins, or neutral |
 | 🔦 **Fn overlay** | Hold Fn and only the keys bound on the Fn layer light up, in a colour of your choice |
 | 📏 **Light bar** | The 9-LED strip under the screen: WPM meter, battery gauge, link status, scanner, Caps alert |
@@ -65,7 +67,7 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 | Bluetooth hosts | 3 | 5 |
 | Battery in the OS | Bluetooth / 2.4 GHz | also over USB (Linux: `upower`, desktop widgets) |
 | Keymap power | remap, macros, mod-tap, toggle, key combos | everything QMK has: up to 4 layers live in Vial, tap dance, combos, key overrides, caps word, layer lock, repeat key, auto shift, per-key tapping settings; any QMK feature in code |
-| Lighting | stock effects, per-key colours | 30+ QMK effects, 7 **two-colour** effects, black as a colour, Fn overlay showing only the keys bound on Fn |
+| Lighting | stock effects, per-key colours | 30+ QMK effects, 7 **two-colour** effects, 4 **theme** slots (per-key colours, layers, direction), black as a colour, Fn overlay showing only the keys bound on Fn |
 | Light bar | effect switch | WPM meter, WPM bar, battery gauge, link status, scanner, Caps alert |
 | Auto-sleep | not adjustable in the configurator | 1 / 5 / 10 / 30 min or off, from the keyboard |
 | Recovery | bootloader only through the web configurator | hold Esc while plugging in → bootloader; watchdog drops a hung firmware into the bootloader |
@@ -75,7 +77,6 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 
 - Uploading images from the web configurator — use `screen.py` (below); the stock built-in screen pages aren't shown.
 - A clock on the screen synced from the PC.
-- Per-key custom colours ("Lighting Edit") and a lighting direction setting.
 - Key response time (debounce) adjustable at runtime.
 - Win / Mac mode switch (Fn+M) and Cmd lock.
 - Configurable SnapTap pairs and the two "key priority" modes — fixed to A/D and W/S, last input or neutral, for now.
@@ -153,6 +154,22 @@ Besides the stock QMK effects there are custom two-colour effects that use **COL
 **SCANNER 2**, **STARLIGHT 2**, **REACTIVE 2** and **RIPPLE 2** (both react to key presses).
 Rows that the current effect doesn't use are dimmed in the menu.
 
+### Lighting themes
+
+**THEME 1** … **THEME 4** are effects you build yourself on the **Themes** page of
+[Vial Armed](https://github.com/backflipinc/vial-gui-armed). A theme is a stack of up to 8 layers:
+
+- **SOLID**, **GRADIENT**, **RAINBOW**, **PULSE** — colours across the keys, still or moving;
+- **WAVE** — a band of colour sweeping over the layers below;
+- **SPARKLE** — random keys flashing;
+- **REACTIVE**, **RIPPLE** — keys lighting up when pressed, rings spreading from them;
+- **PAINT** — your own colour on every key.
+
+Every layer covers the keys you click on the layout (or a group: letters, F-row, mods, arrows, WASD…), moves
+in any direction or out from a key you pick, blends over the layers below, and can show only while Caps Lock is on
+or Fn is held. Changes show up on the keyboard as you make them; **SAVE** keeps them. Start from a preset, and
+export / import themes as files. The themes are stored in the user flash chip, past the area the stock firmware uses.
+
 ### SnapTap
 
 Flip the **SnapTap** switch on the case to turn it on: the screen shows *SNAPTAP ON*, the
@@ -169,7 +186,7 @@ are under **User**. Changes that need unlocking ask you to hold **Caps + Enter**
 Vial only talks to the keyboard over USB.
 
 On top of everything Vial does, Vial Armed sets what stock Vial can't: all effects
-including the two-colour ones (with a live preview on the layout), COLOR 2, the Fn overlay colour, the light
+including the two-colour ones (with a live preview on the layout), COLOR 2, the Fn overlay colour, lighting themes, the light
 bar, the auto-sleep timer and the screen animation. It talks to the keyboard over the [qmk-armed protocol](https://github.com/backflipinc/qmk-armed/blob/armed/docs/armed.md);
 regular Vial keeps working as before.
 
