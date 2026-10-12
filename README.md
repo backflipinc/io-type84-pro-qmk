@@ -15,12 +15,31 @@ reporting and auto-sleep all keep working. See [how it compares with the stock f
 > This is an unofficial, reverse-engineered firmware. Flashing is reversible (see
 > [Going back to stock](https://github.com/backflipinc/qmk-armed/blob/armed/keyboards/io/type84_pro/docs/flashing.md#going-back-to-stock)), but you do it at your own risk.
 
+## Configure it with Vial Armed
+
+[![Vial Armed](https://github.com/backflipinc/vial-gui-armed/raw/main/docs/screenshots/lighting.png)](https://github.com/backflipinc/vial-gui-armed)
+
+[**Vial Armed**](https://github.com/backflipinc/vial-gui-armed) is the desktop app for this firmware — a Vial fork
+in the same design as the keyboard's screen. Flash the firmware ([Quick start](#quick-start)), set the mode switch
+to **USB**, open the app, and everything is in one place:
+
+- **Keymap** — keys and knobs on all layers, macros, tap dance, combos, key overrides, QMK settings, matrix tester;
+- **Lighting** — every effect including the 7 two-colour ones, with a live preview on the layout; COLOR, COLOR 2, Fn overlay colour;
+- **Light bar** — mode, colour, Caps Lock alert;
+- **Device** — auto-sleep timer;
+- **Screen** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore.
+
+Download it from [Releases](https://github.com/backflipinc/vial-gui-armed/releases): Linux AppImage, Windows installer
+or portable zip, macOS dmg. On Linux, install the [udev rule](#quick-start) (step 3) so the app can reach the keyboard
+without root. Regular [Vial](https://get.vial.today) works too, but only for the keymap and the stock QMK effects.
+Everything can also be set without a PC from the [on-screen menu](#on-screen-menu).
+
 ## Features
 
 | | |
 |---|---|
 | ⌨️ **Keys** | Full 84-key layout, NKRO over USB **and** Bluetooth / 2.4 GHz (on by default), QMK keymaps |
-| 🧩 **Vial** | Built in: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing. [Vial Armed](https://github.com/backflipinc/vial-gui-armed) also sets the two-colour effects, light bar, Fn colour and auto-sleep |
+| 🧩 **Vial Armed** | Built-in Vial support: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing. [Vial Armed](#configure-it-with-vial-armed) also sets the two-colour effects, light bar, Fn colour, auto-sleep and the screen animation |
 | 🎛️ **Knob** | The removable knob works in both spots (Esc or PrtSc): volume, mute, next/prev track on Fn |
 | 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, link status, lock indicators — plus a full settings menu |
 | 🎞️ **Animation** | Your own image, GIF or video on the screen instead of the HUD, stored in the same place and format as stock |
@@ -30,7 +49,7 @@ reporting and auto-sleep all keep working. See [how it compares with the stock f
 | 📏 **Light bar** | The 9-LED strip under the screen: WPM meter, battery gauge, link status, scanner, Caps alert |
 | 📡 **Wireless** | Bluetooth (5 host slots) and 2.4 GHz dongle via the built-in radio module, pairing from the keyboard |
 | 🔋 **Battery** | Charge level on screen and in the OS — over Bluetooth, the 2.4 GHz dongle **and** USB (Linux) |
-| 💤 **Power** | Configurable auto-sleep in wireless modes (deep sleep, any key/knob/switch wakes it) |
+| 💤 **Power** | Auto-sleep in wireless modes after 1 / 5 / 10 / 30 min or never (5 by default); deep sleep, any key, knob or switch wakes it |
 | 🛟 **Safety nets** | Hold Esc while plugging in → bootloader; a watchdog drops a hung firmware into the bootloader |
 
 ## Compared with the stock firmware
@@ -106,7 +125,7 @@ the cable in**. Details, recovery and going back to stock: [flashing.md](https:/
 | **Fn+S** | Auto-sleep timer: 5 → 10 → 30 min → off → 1 min |
 | **Fn+N**, **Fn+Win** | NKRO on/off, Win key lock |
 | **Fn+PgUp / PgDn** | Home / End |
-| **Fn+F1 / F2**, **F5–F7**, **F9–F11** | Screen brightness, media prev/play/next, mute / volume |
+| **Fn+F1 / F2**, **F5–F7**, **F9–F11** | Monitor brightness − / +, media prev/play/next, mute / volume |
 | Knob | Volume (Fn: previous / next track); press = mute. In the menu: scroll and select |
 
 The **mode switch** on the back selects USB / Bluetooth / 2.4 GHz. In wireless modes the
@@ -121,7 +140,7 @@ keyboard disconnects from USB, just like the stock firmware (the cable only char
 | **SNAPTAP** | switch state, mode (last input / neutral), key pairs |
 | **WIRELESS** | current mode, Bluetooth slot, pair now |
 | **POWER** | auto-sleep timer, battery %, voltage, charging status |
-| **DISPLAY** | UI accent colour (amber, green, cyan, red, white), screen-off timeout |
+| **DISPLAY** | UI accent colour (amber, green, cyan, red, white), screen-off timeout (30 s – 10 min or off), main screen (HUD / animation), stored animation info |
 | **SYSTEM** | NKRO, Win lock, bootloader, factory reset (both with a confirmation) |
 | **ABOUT** | firmware, build date, MCU, uptime |
 
@@ -141,18 +160,17 @@ A/D and W/S keys blink and a **SNAPTAP** tile lights up on the main screen. Whil
 of a pair are held, only one reaches the host — the last one pressed (**LAST**), or neither
 (**NEUTRAL**, set in the menu). Turn it off for typing: fast rollovers like "ad" would retype a letter.
 
-### Vial
+### Vial and Vial Armed
 
 The default build includes Vial. Set the mode switch to **USB** and open
-[Vial](https://get.vial.today) — the keyboard is detected by itself. Keys and knobs can be
+[Vial Armed](https://github.com/backflipinc/vial-gui-armed) (or regular [Vial](https://get.vial.today)) — the keyboard is detected by itself. Keys and knobs can be
 remapped on 4 layers; the keyboard's own keys (Bluetooth slots, pairing, menu, sleep timer)
 are under **User**. Changes that need unlocking ask you to hold **Caps + Enter**.
 Vial only talks to the keyboard over USB.
 
-[**Vial Armed**](https://github.com/backflipinc/vial-gui-armed) is a Vial fork made for this firmware, in the
-same design as the screen UI. On top of everything Vial does, it sets what stock Vial can't: all effects
+On top of everything Vial does, Vial Armed sets what stock Vial can't: all effects
 including the two-colour ones (with a live preview on the layout), COLOR 2, the Fn overlay colour, the light
-bar and the auto-sleep timer. It talks to the keyboard over the [qmk-armed protocol](https://github.com/backflipinc/qmk-armed/blob/armed/docs/armed.md);
+bar, the auto-sleep timer and the screen animation. It talks to the keyboard over the [qmk-armed protocol](https://github.com/backflipinc/qmk-armed/blob/armed/docs/armed.md);
 regular Vial keeps working as before.
 
 ### Your own animation on the screen
@@ -216,8 +234,8 @@ Keyboard changes go to [qmk-armed](https://github.com/backflipinc/qmk-armed) fir
 ## Credits
 
 - [QMK](https://github.com/qmk/qmk_firmware) and [SonixQMK](https://github.com/SonixQMK/qmk_firmware) — the firmware and the SN32 port
-- [Vial](https://get.vial.today) / [vial-qmk](https://github.com/vial-kb/vial-qmk) — live remapping;
-  [Vial Armed](https://github.com/backflipinc/vial-gui-armed) — the companion app
+- [Vial](https://get.vial.today) / [vial-qmk](https://github.com/vial-kb/vial-qmk) — live remapping, and the base of
+  [Vial Armed](https://github.com/backflipinc/vial-gui-armed), the companion app
 - [SonixFlasherC](https://github.com/SonixQMK/SonixFlasherC) — the flasher
 - [ChibiOS](https://www.chibios.org) / ChibiOS-Contrib — the RTOS and HAL
 - Fonts: [Share Tech Mono](https://fonts.google.com/specimen/Share+Tech+Mono) and
