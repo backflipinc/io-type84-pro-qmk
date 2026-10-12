@@ -28,7 +28,7 @@ to **USB**, open the app, and everything is in one place:
 - **Themes** — your own lighting: per-key colours and layers (gradients, rainbow, waves, sparkles, reactive keys, ripples) with any direction, edited live on the keyboard;
 - **Light bar** — mode, colour, Caps Lock alert;
 - **Device** — auto-sleep timer;
-- **Screen** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore.
+- **Screen** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore; the HUD clock, set from the PC on connect.
 
 Download it from [Releases](https://github.com/backflipinc/vial-gui-armed/releases): Linux AppImage, Windows installer
 or portable zip, macOS dmg. On Linux, install the [udev rule](#quick-start) (step 3) so the app can reach the keyboard
@@ -40,9 +40,9 @@ Everything can also be set without a PC from the [on-screen menu](#on-screen-men
 | | |
 |---|---|
 | ⌨️ **Keys** | Full 84-key layout, NKRO over USB **and** Bluetooth / 2.4 GHz (on by default), QMK keymaps |
-| 🧩 **Vial Armed** | Built-in Vial support: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing. [Vial Armed](#configure-it-with-vial-armed) also sets the two-colour effects, lighting themes, light bar, Fn colour, auto-sleep and the screen animation |
+| 🧩 **Vial Armed** | Built-in Vial support: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing. [Vial Armed](#configure-it-with-vial-armed) also sets the two-colour effects, lighting themes, light bar, Fn colour, auto-sleep, the clock and the screen animation |
 | 🎛️ **Knob** | The removable knob works in both spots (Esc or PrtSc): volume, mute, next/prev track on Fn |
-| 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, link status, lock indicators — plus a full settings menu |
+| 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, clock, link status, lock indicators — plus a full settings menu |
 | 🎞️ **Animation** | Your own image, GIF or video on the screen instead of the HUD, stored in the same place and format as stock |
 | 🌈 **RGB** | Per-key RGB with 30+ effects, including 7 custom **two-colour** effects; black is a colour too |
 | 🎨 **Themes** | 4 slots for your own lighting, built from layers and per-key colours in [Vial Armed](#lighting-themes) |
@@ -63,7 +63,7 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 | | Stock | This firmware |
 |---|---|---|
 | Settings | web configurator (WebHID, Chromium browsers only) | on-device menu on the LCD — no PC or browser needed; Vial for keymaps; [Vial Armed](https://github.com/backflipinc/vial-gui-armed) desktop app for keymaps and lighting with a live preview |
-| Screen | images / animations, page switching | live HUD: layer, WPM, battery %, voltage, link, lock and SnapTap state; settings menu; screen-off timeout; your own image / GIF / video (uploaded with `screen.py`, compatible with stock uploads) |
+| Screen | images / animations, page switching | live HUD: layer, WPM, battery %, voltage, clock, link, lock and SnapTap state; settings menu; screen-off timeout; your own image / GIF / video (uploaded with `screen.py`, compatible with stock uploads) |
 | Bluetooth hosts | 3 | 5 |
 | Battery in the OS | Bluetooth / 2.4 GHz | also over USB (Linux: `upower`, desktop widgets) |
 | Keymap power | remap, macros, mod-tap, toggle, key combos | everything QMK has: up to 4 layers live in Vial, tap dance, combos, key overrides, caps word, layer lock, repeat key, auto shift, per-key tapping settings; any QMK feature in code |
@@ -76,7 +76,6 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 **What stock has and this firmware doesn't (yet)**
 
 - Uploading images from the web configurator — use `screen.py` (below); the stock built-in screen pages aren't shown.
-- A clock on the screen synced from the PC.
 - Key response time (debounce) adjustable at runtime.
 - Win / Mac mode switch (Fn+M) and Cmd lock.
 - Configurable SnapTap pairs and the two "key priority" modes — fixed to A/D and W/S, last input or neutral, for now.
@@ -141,7 +140,7 @@ keyboard disconnects from USB, just like the stock firmware (the cable only char
 | **SNAPTAP** | switch state, mode (last input / neutral), key pairs |
 | **WIRELESS** | current mode, Bluetooth slot, pair now |
 | **POWER** | auto-sleep timer, battery %, voltage, charging status |
-| **DISPLAY** | UI accent colour (amber, green, cyan, red, white), screen-off timeout (30 s – 10 min or off), main screen (HUD / animation), stored animation info |
+| **DISPLAY** | UI accent colour (amber, green, cyan, red, white), screen-off timeout (30 s – 10 min or off), main screen (HUD / animation), clock (24H / 12H / off), stored animation info |
 | **SYSTEM** | NKRO, Win lock, bootloader, factory reset (both with a confirmation) |
 | **ABOUT** | firmware, build date, MCU, uptime |
 
@@ -239,7 +238,7 @@ Keyboard changes go to [qmk-armed](https://github.com/backflipinc/qmk-armed) fir
 ## Status and limitations
 
 - Tested on one keyboard (stock firmware v1.32), on Linux.
-- Raw HID host data on the screen (clock, CPU load, …) is not implemented yet.
+- The clock is set by Vial Armed when it connects (the RTC chip keeps it through sleep and unplugging); other host data on the screen (CPU load, …) is not implemented yet.
 - Animation uploads go over Vial's 32-byte raw HID reports, ~26 KiB/s: a few seconds for a cartoon-like GIF,
   about 4 s per frame of video (151 frames ≈ 10 min).
 - Like stock, frames reach the screen without vsync: fast high-contrast motion may show tearing.
