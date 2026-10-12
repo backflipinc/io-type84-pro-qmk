@@ -47,7 +47,7 @@ Everything can also be set without a PC from the [on-screen menu](#on-screen-men
 | 🌈 **RGB** | Per-key RGB with 30+ effects, including 7 custom **two-colour** effects; black is a colour too |
 | 🎨 **Themes** | 4 slots for your own lighting, built from layers and per-key colours in [Vial Armed](#lighting-themes) |
 | 🎯 **SnapTap** | The SnapTap switch on the case works: opposing keys A/D and W/S never cancel out — last input wins, or neutral |
-| 🔦 **Fn overlay** | Hold Fn and only the keys bound on the Fn layer light up, in a colour of your choice |
+| 🔦 **Fn overlay** | Hold Fn and only the keys bound on the Fn layer light up, in a colour of your choice — unless the current theme has its own Fn layers |
 | 📏 **Light bar** | The 9-LED strip under the screen: WPM meter, battery gauge, link status, scanner, Caps alert |
 | 📡 **Wireless** | Bluetooth (5 host slots) and 2.4 GHz dongle via the built-in radio module, pairing from the keyboard |
 | 🔋 **Battery** | Charge level on screen and in the OS — over Bluetooth, the 2.4 GHz dongle **and** USB (Linux) |
@@ -165,9 +165,9 @@ Rows that the current effect doesn't use are dimmed in the menu.
 - **REACTIVE**, **RIPPLE** — keys lighting up when pressed, rings spreading from them;
 - **PAINT** — your own colour on every key.
 
-Every layer covers the keys you click on the layout (or a group: letters, F-row, mods, arrows, WASD…), moves
+Every layer covers the keys you click on the layout (or a group: letters, F-row, mods, arrows, WASD, the keys bound on Fn…), moves
 in any direction or out from a key you pick, blends over the layers below, and can show only while Caps Lock is on
-or Fn is held. Changes show up on the keyboard as you make them; **SAVE** keeps them. Start from a preset, and
+or Fn is held (a theme with such layers replaces the Fn overlay). Changes show up on the keyboard as you make them; **SAVE** keeps them. Start from a preset, and
 export / import themes as files. The themes are stored in the user flash chip, past the area the stock firmware uses.
 
 ### SnapTap
