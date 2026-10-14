@@ -25,11 +25,11 @@ through the **2.4 GHz dongle**, open the app, and everything is in one place:
 
 - **Keymap** — keys and knobs on all layers, macros, tap dance, combos, key overrides, QMK settings, matrix tester;
 - **Lighting** — every effect including the 7 two-colour ones, with a live preview on the layout; COLOR, COLOR 2, Fn overlay colour;
-- **Themes** — your own lighting: per-key colours and layers (gradients, rainbow, waves, sparkles, reactive keys, ripples) with any direction, edited live on the keyboard;
+- **Lighting > Themes** — your own lighting: per-key colours and layers (gradients, rainbow, waves, sparkles, reactive keys, ripples) with any direction, edited live on the keyboard;
 - **Light bar** — mode, colour, Caps Lock alert;
-- **Device** — auto-sleep timer;
-- **Screen** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore; the HUD clock, set from the PC on connect;
-- **HUD** — lay out the main screen yourself, with your PC's metrics and the output of your scripts on it.
+- **Device** — NKRO, Win lock, SnapTap mode, Bluetooth slot, screen accent and timeout, auto-sleep;
+- **Screen > Animation & clock** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore; the HUD clock, set from the PC on connect;
+- **Screen > HUD** — lay out the main screen yourself, with your PC's metrics and the output of your scripts on it.
 
 Download it from [Releases](https://github.com/backflipinc/vial-gui-armed/releases): Linux AppImage or .deb, Windows installer
 or portable zip, macOS dmg. On Linux, install the [udev rule](#quick-start) (step 3) so the app can reach the keyboard
