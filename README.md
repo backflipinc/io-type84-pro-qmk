@@ -28,7 +28,8 @@ through the **2.4 GHz dongle**, open the app, and everything is in one place:
 - **Lighting > Theme editor** — your own lighting: per-key colours and layers (gradients, rainbow, waves, sparkles, reactive keys, ripples) with any direction, edited live on the keyboard;
 - **Light bar** — mode, colour, Caps Lock alert;
 - **Device** — NKRO, Win lock, SnapTap mode, Bluetooth slot, auto-sleep;
-- **Screen > Settings** — accent colour and screen-off timeout, your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore; the HUD clock, set from the PC on connect;
+- **Screen > Settings** — HUD / animation switch, accent colour, screen-off timeout, the HUD clock (set from the PC on connect);
+- **Screen > Animation** — your own picture, GIF or video on the LCD, backup and restore;
 - **Screen > HUD editor** — lay out the main screen yourself, with your PC's metrics and the output of your scripts on it.
 
 Download it from [Releases](https://github.com/backflipinc/vial-gui-armed/releases): Linux AppImage or .deb, Windows installer
@@ -209,7 +210,7 @@ letters.
 
 ### Your own animation on the screen
 
-[Vial Armed](https://github.com/backflipinc/vial-gui-armed) does it under **Screen > Settings** (preview, fit, progress,
+[Vial Armed](https://github.com/backflipinc/vial-gui-armed) does it under **Screen > Animation** (preview, fit, progress,
 backup / restore). From the command line, `screen.py` puts a picture, a GIF (or animated WebP / PNG) or a video on the screen. It needs Python with
 `pip install hid pillow numpy`, and `ffmpeg` for video. The mode switch must be on **USB**.
 
