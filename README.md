@@ -25,11 +25,11 @@ through the **2.4 GHz dongle**, open the app, and everything is in one place:
 
 - **Keymap** — keys and knobs on all layers, macros, tap dance, combos, key overrides, QMK settings, matrix tester;
 - **Lighting** — every effect including the 7 two-colour ones, with a live preview on the layout; COLOR, COLOR 2, Fn overlay colour;
-- **Lighting > Themes** — your own lighting: per-key colours and layers (gradients, rainbow, waves, sparkles, reactive keys, ripples) with any direction, edited live on the keyboard;
+- **Lighting > Theme editor** — your own lighting: per-key colours and layers (gradients, rainbow, waves, sparkles, reactive keys, ripples) with any direction, edited live on the keyboard;
 - **Light bar** — mode, colour, Caps Lock alert;
-- **Device** — NKRO, Win lock, SnapTap mode, Bluetooth slot, screen accent and timeout, auto-sleep;
-- **Screen > Animation & clock** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore; the HUD clock, set from the PC on connect;
-- **Screen > HUD** — lay out the main screen yourself, with your PC's metrics and the output of your scripts on it.
+- **Device** — NKRO, Win lock, SnapTap mode, Bluetooth slot, auto-sleep;
+- **Screen > Settings** — accent colour and screen-off timeout, your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore; the HUD clock, set from the PC on connect;
+- **Screen > HUD editor** — lay out the main screen yourself, with your PC's metrics and the output of your scripts on it.
 
 Download it from [Releases](https://github.com/backflipinc/vial-gui-armed/releases): Linux AppImage or .deb, Windows installer
 or portable zip, macOS dmg. On Linux, install the [udev rule](#quick-start) (step 3) so the app can reach the keyboard
@@ -156,7 +156,7 @@ Rows that the current effect doesn't use are dimmed in the menu.
 
 ### Lighting themes
 
-**THEME 1** … **THEME 4** are effects you build yourself on the **Themes** page of
+**THEME 1** … **THEME 4** are effects you build yourself in **Lighting > Theme editor** of
 [Vial Armed](https://github.com/backflipinc/vial-gui-armed). A theme is a stack of up to 8 layers:
 
 - **SOLID**, **GRADIENT**, **RAINBOW**, **PULSE** — colours across the keys, still or moving;
@@ -196,7 +196,7 @@ regular Vial keeps working as before.
 
 The main screen is a layout of widgets you can change: text with live values, bars, graphs, indicator tiles, the
 battery icon, frames and lines, multi-line text. [Vial Armed](https://github.com/backflipinc/vial-gui-armed)'s
-**HUD** page edits it on a pixel-exact preview (the keyboard's own fonts and colour roles, so it keeps the look of
+**Screen > HUD editor** edits it on a pixel-exact preview (the keyboard's own fonts and colour roles, so it keeps the look of
 the firmware and follows DISPLAY > ACCENT); every change is live, SAVE stores it on the keyboard, START FROM >
 KEYBOARD DEFAULT brings back the stock layout.
 
@@ -209,7 +209,7 @@ letters.
 
 ### Your own animation on the screen
 
-[Vial Armed](https://github.com/backflipinc/vial-gui-armed) does it on its **Screen** page (preview, fit, progress,
+[Vial Armed](https://github.com/backflipinc/vial-gui-armed) does it under **Screen > Settings** (preview, fit, progress,
 backup / restore). From the command line, `screen.py` puts a picture, a GIF (or animated WebP / PNG) or a video on the screen. It needs Python with
 `pip install hid pillow numpy`, and `ffmpeg` for video. The mode switch must be on **USB**.
 
