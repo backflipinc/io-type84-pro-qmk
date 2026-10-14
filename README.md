@@ -20,8 +20,8 @@ reporting and auto-sleep all keep working. See [how it compares with the stock f
 [![Vial Armed](https://github.com/backflipinc/vial-gui-armed/raw/main/docs/screenshots/lighting.png)](https://github.com/backflipinc/vial-gui-armed)
 
 [**Vial Armed**](https://github.com/backflipinc/vial-gui-armed) is the desktop app for this firmware — a Vial fork
-in the same design as the keyboard's screen. Flash the firmware ([Quick start](#quick-start)), set the mode switch
-to **USB**, open the app, and everything is in one place:
+in the same design as the keyboard's screen. Flash the firmware ([Quick start](#quick-start)), connect the keyboard by **USB** or
+through the **2.4 GHz dongle**, open the app, and everything is in one place:
 
 - **Keymap** — keys and knobs on all layers, macros, tap dance, combos, key overrides, QMK settings, matrix tester;
 - **Lighting** — every effect including the 7 two-colour ones, with a live preview on the layout; COLOR, COLOR 2, Fn overlay colour;
@@ -30,9 +30,9 @@ to **USB**, open the app, and everything is in one place:
 - **Device** — auto-sleep timer;
 - **Screen** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore; the HUD clock, set from the PC on connect.
 
-Download it from [Releases](https://github.com/backflipinc/vial-gui-armed/releases): Linux AppImage, Windows installer
+Download it from [Releases](https://github.com/backflipinc/vial-gui-armed/releases): Linux AppImage or .deb, Windows installer
 or portable zip, macOS dmg. On Linux, install the [udev rule](#quick-start) (step 3) so the app can reach the keyboard
-without root. Regular [Vial](https://get.vial.today) works too, but only for the keymap and the stock QMK effects.
+without root (copy it again when updating from 1.4 or older: 1.5 adds the dongle). Regular [Vial](https://get.vial.today) works too, but only for the keymap and the stock QMK effects.
 Everything can also be set without a PC from the [on-screen menu](#on-screen-menu).
 
 ## Features
@@ -49,7 +49,7 @@ Everything can also be set without a PC from the [on-screen menu](#on-screen-men
 | 🎯 **SnapTap** | The SnapTap switch on the case works: opposing keys A/D and W/S never cancel out — last input wins, or neutral |
 | 🔦 **Fn overlay** | Hold Fn and only the keys bound on the Fn layer light up, in a colour of your choice — unless the current theme has its own Fn layers |
 | 📏 **Light bar** | The 9-LED strip under the screen: WPM meter, battery gauge, link status, scanner, Caps alert |
-| 📡 **Wireless** | Bluetooth (5 host slots) and 2.4 GHz dongle via the built-in radio module, pairing from the keyboard |
+| 📡 **Wireless** | Bluetooth (5 host slots) and 2.4 GHz dongle via the built-in radio module, pairing from the keyboard; Vial / Vial Armed work through the dongle too |
 | 🔋 **Battery** | Charge level on screen and in the OS — over Bluetooth, the 2.4 GHz dongle **and** USB (Linux) |
 | 💤 **Power** | Auto-sleep in wireless modes after 1 / 5 / 10 / 30 min or never (5 by default); deep sleep, any key, knob or switch wakes it |
 | 🛟 **Safety nets** | Hold Esc while plugging in → bootloader; a watchdog drops a hung firmware into the bootloader |
@@ -105,9 +105,9 @@ sudo cp qmk-armed/keyboards/io/type84_pro/udev/70-io-type84-pro.rules /etc/udev/
 ./flash.sh                                     # or ./flash.sh path/to/io_type84_pro_default.bin
 ```
 
-`flash.sh` puts a **stock** keyboard into its bootloader by itself. On QMK, enter the
-bootloader from the menu (**Fn+Enter → SYSTEM → BOOTLOADER**) or **hold Esc while plugging
-the cable in**. Details, recovery and going back to stock: [flashing.md](https://github.com/backflipinc/qmk-armed/blob/armed/keyboards/io/type84_pro/docs/flashing.md).
+`flash.sh` puts the keyboard into its bootloader by itself — stock, or this firmware from 1.5 on
+(`tools/bootloader.py`). With older builds, enter the bootloader from the menu
+(**Fn+Enter → SYSTEM → BOOTLOADER**) or **hold Esc while plugging the cable in**. Details, recovery and going back to stock: [flashing.md](https://github.com/backflipinc/qmk-armed/blob/armed/keyboards/io/type84_pro/docs/flashing.md).
 
 ## Using it
 
@@ -178,11 +178,13 @@ of a pair are held, only one reaches the host — the last one pressed (**LAST**
 
 ### Vial and Vial Armed
 
-The default build includes Vial. Set the mode switch to **USB** and open
+The default build includes Vial. Connect the keyboard by **USB**, or set the mode switch to **2.4 GHz** with
+the dongle plugged in, and open
 [Vial Armed](https://github.com/backflipinc/vial-gui-armed) (or regular [Vial](https://get.vial.today)) — the keyboard is detected by itself. Keys and knobs can be
 remapped on 4 layers; the keyboard's own keys (Bluetooth slots, pairing, menu, sleep timer)
 are under **User**. Changes that need unlocking ask you to hold **Caps + Enter**.
-Vial only talks to the keyboard over USB.
+Through the dongle every request takes ~20 ms, so connecting takes a few seconds; regular Vial doesn't recognise
+the dongle (no Vial serial number), Vial Armed does. Bluetooth has no channel for it.
 
 On top of everything Vial does, Vial Armed sets what stock Vial can't: all effects
 including the two-colour ones (with a live preview on the layout), COLOR 2, the Fn overlay colour, lighting themes, the light
@@ -242,7 +244,8 @@ Keyboard changes go to [qmk-armed](https://github.com/backflipinc/qmk-armed) fir
 - Animation uploads go over Vial's 32-byte raw HID reports, ~26 KiB/s: a few seconds for a cartoon-like GIF,
   about 4 s per frame of video (151 frames ≈ 10 min).
 - Like stock, frames reach the screen without vsync: fast high-contrast motion may show tearing.
-- Vial works over USB only; in BT / 2.4 GHz the keyboard is off the USB bus.
+- Vial works over USB and the 2.4 GHz dongle, not over Bluetooth (the radio module has no channel for it).
+  Screen animations are transferred over USB only (megabytes at ~20 ms per 28-byte packet).
 - System power keys and mouse keys are not sent over the air (format unverified).
 - The USB battery report narrows QMK's *System Control* report to power / sleep / wake, so
   `KC_SYSTEM_RESTART` and similar rarely used keys do nothing.
