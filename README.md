@@ -28,7 +28,8 @@ through the **2.4 GHz dongle**, open the app, and everything is in one place:
 - **Themes** — your own lighting: per-key colours and layers (gradients, rainbow, waves, sparkles, reactive keys, ripples) with any direction, edited live on the keyboard;
 - **Light bar** — mode, colour, Caps Lock alert;
 - **Device** — auto-sleep timer;
-- **Screen** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore; the HUD clock, set from the PC on connect.
+- **Screen** — your own picture, GIF or video on the LCD, HUD / animation switch, backup and restore; the HUD clock, set from the PC on connect;
+- **HUD** — lay out the main screen yourself, with your PC's metrics and the output of your scripts on it.
 
 Download it from [Releases](https://github.com/backflipinc/vial-gui-armed/releases): Linux AppImage or .deb, Windows installer
 or portable zip, macOS dmg. On Linux, install the [udev rule](#quick-start) (step 3) so the app can reach the keyboard
@@ -42,7 +43,7 @@ Everything can also be set without a PC from the [on-screen menu](#on-screen-men
 | ⌨️ **Keys** | Full 84-key layout, NKRO over USB **and** Bluetooth / 2.4 GHz (on by default), QMK keymaps |
 | 🧩 **Vial Armed** | Built-in Vial support: remap keys and knobs, macros, combos, tap dance and key overrides live, no reflashing. [Vial Armed](#configure-it-with-vial-armed) also sets the two-colour effects, lighting themes, light bar, Fn colour, auto-sleep, the clock and the screen animation |
 | 🎛️ **Knob** | The removable knob works in both spots (Esc or PrtSc): volume, mute, next/prev track on Fn |
-| 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, clock, link status, lock indicators — plus a full settings menu |
+| 🖥️ **Display** | 320×172 HUD: layer, WPM, battery, clock, link status, lock indicators — plus a full settings menu. The layout is yours to change in Vial Armed, with the PC's metrics and your scripts' output on it |
 | 🎞️ **Animation** | Your own image, GIF or video on the screen instead of the HUD, stored in the same place and format as stock |
 | 🌈 **RGB** | Per-key RGB with 30+ effects, including 7 custom **two-colour** effects; black is a colour too |
 | 🎨 **Themes** | 4 slots for your own lighting, built from layers and per-key colours in [Vial Armed](#lighting-themes) |
@@ -63,7 +64,7 @@ Compared with the official firmware v1.32 and its web configurator (`web.io.visi
 | | Stock | This firmware |
 |---|---|---|
 | Settings | web configurator (WebHID, Chromium browsers only) | on-device menu on the LCD — no PC or browser needed; Vial for keymaps; [Vial Armed](https://github.com/backflipinc/vial-gui-armed) desktop app for keymaps and lighting with a live preview |
-| Screen | images / animations, page switching | live HUD: layer, WPM, battery %, voltage, clock, link, lock and SnapTap state; settings menu; screen-off timeout; your own image / GIF / video (uploaded with `screen.py`, compatible with stock uploads) |
+| Screen | images / animations, page switching | live HUD: layer, WPM, battery %, voltage, clock, link, lock and SnapTap state — laid out as you like, with the PC's metrics and scripts' output; settings menu; screen-off timeout; your own image / GIF / video (uploaded with `screen.py`, compatible with stock uploads) |
 | Bluetooth hosts | 3 | 5 |
 | Battery in the OS | Bluetooth | also over USB (Linux: `upower`, desktop widgets) |
 | Keymap power | remap, macros, mod-tap, toggle, key combos | everything QMK has: up to 4 layers live in Vial, tap dance, combos, key overrides, caps word, layer lock, repeat key, auto shift, per-key tapping settings; any QMK feature in code |
@@ -188,8 +189,23 @@ the dongle (no Vial serial number), Vial Armed does. Bluetooth has no channel fo
 
 On top of everything Vial does, Vial Armed sets what stock Vial can't: all effects
 including the two-colour ones (with a live preview on the layout), COLOR 2, the Fn overlay colour, lighting themes, the light
-bar, the auto-sleep timer and the screen animation. It talks to the keyboard over the [qmk-armed protocol](https://github.com/backflipinc/qmk-armed/blob/armed/docs/armed.md);
+bar, the auto-sleep timer, the screen animation and the HUD layout. It talks to the keyboard over the [qmk-armed protocol](https://github.com/backflipinc/qmk-armed/blob/armed/docs/armed.md);
 regular Vial keeps working as before.
+
+### Your own HUD
+
+The main screen is a layout of widgets you can change: text with live values, bars, graphs, indicator tiles, the
+battery icon, frames and lines, multi-line text. [Vial Armed](https://github.com/backflipinc/vial-gui-armed)'s
+**HUD** page edits it on a pixel-exact preview (the keyboard's own fonts and colour roles, so it keeps the look of
+the firmware and follows DISPLAY > ACCENT); every change is live, SAVE stores it on the keyboard, START FROM >
+KEYBOARD DEFAULT brings back the stock layout.
+
+Besides the keyboard's own values (layer, WPM, battery, voltage, link, clock, locks, SnapTap, effect, uptime, ...),
+widgets can show 16 numbers and 4 texts sent by the PC: Vial Armed's agent fills them with CPU / GPU load and
+temperature, RAM, network, disk and so on, or with the output of your own commands and scripts. It runs while Vial
+Armed is open, or without a window as `vial-armed --agent` (RUN AT LOGIN on Linux), over USB and the 2.4 GHz
+dongle; the values don't keep a wireless keyboard awake. The fonts are ASCII: the agent spells Cyrillic in Latin
+letters.
 
 ### Your own animation on the screen
 
@@ -242,13 +258,13 @@ Keyboard changes go to [qmk-armed](https://github.com/backflipinc/qmk-armed) fir
 ## Status and limitations
 
 - Tested on one keyboard (stock firmware v1.32), on Linux.
-- The clock is set by Vial Armed when it connects (the RTC chip keeps it through sleep and unplugging); other host data on the screen (CPU load, …) is not implemented yet.
+- The clock is set by Vial Armed when it connects (the RTC chip keeps it through sleep and unplugging); PC metrics and script output reach the screen while Vial Armed or its agent runs (USB and the 2.4 GHz dongle, not Bluetooth).
 - Animation uploads go over Vial's 32-byte raw HID reports, ~26 KiB/s: a few seconds for a cartoon-like GIF,
   about 4 s per frame of video (151 frames ≈ 10 min).
 - Like stock, frames reach the screen without vsync: fast high-contrast motion may show tearing.
 - Vial works over USB and the 2.4 GHz dongle, not over Bluetooth (the radio module has no channel for it).
-- The OS sees the battery over Bluetooth and USB, not over the 2.4 GHz dongle (stock has the same limit).
   Screen animations are transferred over USB only (megabytes at ~20 ms per 28-byte packet).
+- The OS sees the battery over Bluetooth and USB, not over the 2.4 GHz dongle (stock has the same limit).
 - System power keys and mouse keys are not sent over the air (format unverified).
 - The USB battery report narrows QMK's *System Control* report to power / sleep / wake, so
   `KC_SYSTEM_RESTART` and similar rarely used keys do nothing.
