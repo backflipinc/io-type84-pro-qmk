@@ -119,7 +119,7 @@ sudo cp qmk-armed/keyboards/io/type84_pro/udev/70-io-type84-pro.rules /etc/udev/
 |---|---|
 | **Fn+Enter** | Open the menu / select / confirm |
 | **Fn+Ctrl** (either) | Back / cancel |
-| **Fn+arrows** | Navigate the menu and change values. Outside the menu: **↑↓** brightness, **←→** lighting effect |
+| **Fn+arrows** | Navigate the menu and change values. Outside the menu: **↑↓** brightness, **←→** main screen: HUD 1, HUD 2, HUD 3, animation |
 | **Fn+Space** | Lighting on / off |
 | **Fn+H / J**, **Fn+K / L** | Hue − / +, effect speed − / + |
 | **Fn+1 … 5** | Bluetooth slot 1–5 — **hold 3 s to pair** |
@@ -142,7 +142,7 @@ keyboard disconnects from USB, just like the stock firmware (the cable only char
 | **SNAPTAP** | switch state, mode (last input / neutral), key pairs |
 | **WIRELESS** | current mode, Bluetooth slot, pair now |
 | **POWER** | auto-sleep timer, battery %, voltage, charging status |
-| **DISPLAY** | UI accent colour (amber, green, cyan, red, white), screen-off timeout (30 s – 10 min or off), main screen (HUD / animation), clock (24H / 12H / off), stored animation info |
+| **DISPLAY** | UI accent colour (amber, green, cyan, red, white), screen-off timeout (30 s – 10 min or off), main screen (HUD 1–3 / animation), clock (24H / 12H / off), stored animation info |
 | **SYSTEM** | NKRO, Win lock, bootloader, factory reset (both with a confirmation) |
 | **ABOUT** | firmware, build date, MCU, uptime |
 
@@ -200,7 +200,8 @@ The main screen is a layout of widgets you can change: text with live values, ba
 battery icon, frames and lines, multi-line text. [Vial Armed](https://github.com/backflipinc/vial-gui-armed)'s
 **Screen > HUD editor** edits it on a pixel-exact preview (the keyboard's own fonts and colour roles, so it keeps the look of
 the firmware and follows DISPLAY > ACCENT); every change is live, SAVE stores it on the keyboard, START FROM >
-KEYBOARD DEFAULT brings back the stock layout.
+KEYBOARD DEFAULT brings back the stock layout. The keyboard keeps three layouts; **Fn+Left / Fn+Right** go through
+them and the animation, and the editor follows whichever is shown.
 
 Besides the keyboard's own values (layer, WPM, battery, voltage, link, clock, locks, SnapTap, effect, uptime, ...),
 widgets can show 16 numbers and 4 texts sent by the PC: Vial Armed's agent fills them with CPU / GPU load and
