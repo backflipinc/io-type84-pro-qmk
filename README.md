@@ -204,7 +204,7 @@ KEYBOARD DEFAULT brings back the stock layout.
 Besides the keyboard's own values (layer, WPM, battery, voltage, link, clock, locks, SnapTap, effect, uptime, ...),
 widgets can show 16 numbers and 4 texts sent by the PC: Vial Armed's agent fills them with CPU / GPU load and
 temperature, RAM, network, disk and so on, or with the output of your own commands and scripts. It runs while Vial
-Armed is open, or without a window as `vial-armed --agent` (RUN AT LOGIN on Linux), over USB and the 2.4 GHz
+Armed is open (closing it leaves it in the system tray), or without a window as `vial-armed --agent` (RUN AT LOGIN on Linux), over USB and the 2.4 GHz
 dongle; the values don't keep a wireless keyboard awake. The fonts are ASCII: the agent spells Cyrillic in Latin
 letters.
 
