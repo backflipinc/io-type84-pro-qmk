@@ -166,9 +166,10 @@ Rows that the current effect doesn't use are dimmed in the menu.
 - **REACTIVE**, **RIPPLE** — keys lighting up when pressed, rings spreading from them;
 - **PAINT** — your own colour on every key.
 
-Every layer covers the keys you click on the layout (or a group: letters, F-row, mods, arrows, WASD, the keys bound on Fn…), moves
-in any direction or out from a key you pick, blends over the layers below, and can show only while Caps Lock is on
-or Fn is held (a theme with such layers replaces the Fn overlay). Changes show up on the keyboard as you make them; **SAVE** keeps them and makes the theme the current effect. Start from a preset, and
+Every layer covers all keys, the keys of a keymap layer (FN1, FN2, FN3: what is bound there and the keys that bring
+it up, tri-layer keys included; the keyboard follows remaps by itself), or the keys you click on the layout (or a group:
+letters, F-row, mods, arrows, WASD). It moves in any direction or out from a key you pick, blends over the layers below,
+and can show only while Caps Lock is on or a keymap layer is active (a theme with such layers replaces the Fn overlay). Changes show up on the keyboard as you make them; **SAVE** keeps them and makes the theme the current effect. Start from a preset, and
 export / import themes as files. The themes are stored in the user flash chip, past the area the stock firmware uses.
 
 ### SnapTap
@@ -204,7 +205,7 @@ KEYBOARD DEFAULT brings back the stock layout.
 Besides the keyboard's own values (layer, WPM, battery, voltage, link, clock, locks, SnapTap, effect, uptime, ...),
 widgets can show 16 numbers and 4 texts sent by the PC: Vial Armed's agent fills them with CPU / GPU load and
 temperature, RAM, network, disk and so on, or with the output of your own commands and scripts. It runs while Vial
-Armed is open (closing it leaves it in the system tray), or without a window as `vial-armed --agent` (RUN AT LOGIN on Linux), over USB and the 2.4 GHz
+Armed is open (closing it leaves it in the system tray), or without a window as `vial-armed --agent` (RUN AT LOGIN on Linux and Windows), over USB and the 2.4 GHz
 dongle; the values don't keep a wireless keyboard awake. The fonts are ASCII: the agent spells Cyrillic in Latin
 letters.
 
